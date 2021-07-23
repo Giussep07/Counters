@@ -2,6 +2,7 @@ package com.cornershop.counterstest.di
 
 import android.app.Application
 import com.cornershop.counterstest.app.CountersTestApp
+import com.cornershop.counterstest.di.viewModel.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -11,7 +12,9 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [
     AndroidSupportInjectionModule::class,
-    FragmentsBindingModule::class
+    ApplicationModule::class,
+    FragmentsBindingModule::class,
+    ViewModelModule::class
 ])
 interface ApplicationComponent : AndroidInjector<CountersTestApp> {
 

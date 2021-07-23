@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.cornershop.counterstest.databinding.FragmentWelcomeBinding
 import com.cornershop.counterstest.presentation.base.BindingFragment
 
@@ -20,7 +20,7 @@ class WelcomeFragment : BindingFragment<FragmentWelcomeBinding>() {
 
     private fun setupListeners() {
         binding.welcomeContent?.buttonStart?.setOnClickListener {
-            Toast.makeText(requireContext(), "Hola Pepe", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToHomeFragment())
         }
     }
 
