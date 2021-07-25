@@ -7,12 +7,16 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import kotlinx.android.synthetic.main.create_counter_toolbar.view.*
+import kotlinx.android.synthetic.main.counter_toolbar.view.*
 
-class CreateCounterToolbar(context: Context, attributeSet: AttributeSet) : ConstraintLayout(context, attributeSet) {
+class CounterToolbar(context: Context, attributeSet: AttributeSet) : ConstraintLayout(context, attributeSet) {
+
+    fun setCloseClickListener(action: (View) -> Unit) {
+        btnClose.setOnClickListener(action)
+    }
 
     fun setBackClickListener(action: (View) -> Unit) {
-        btnClose.setOnClickListener(action)
+        btnBack.setOnClickListener(action)
     }
 
     fun setSaveClickListener(action: (View) -> Unit) {
@@ -31,6 +35,19 @@ class CreateCounterToolbar(context: Context, attributeSet: AttributeSet) : Const
     fun hideLoading() {
         btnSave.isVisible = true
         progressLoading.isGone = true
+    }
+
+    fun hideSaveButton() {
+        btnSave.isGone = true
+    }
+
+    fun showBackButton() {
+        btnClose.isGone = true
+        btnBack.isVisible = true
+    }
+
+    fun setToolbarTitle(title: String) {
+        textViewToolbarTitle.text = title
     }
 
 }

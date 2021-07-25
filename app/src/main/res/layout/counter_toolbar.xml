@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.cornershop.counterstest.presentation.widgets.CreateCounterToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<com.cornershop.counterstest.presentation.widgets.CounterToolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,15 +7,16 @@
     android:minHeight="52dp">
 
     <TextView
+        android:id="@+id/textViewToolbarTitle"
         style="@style/TextAppearance.Counter.Headline6.Bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/space_48"
-        android:text="@string/create_counter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnClose"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/glStart"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Toolbar Title" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnClose"
@@ -27,6 +28,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/space_16"
+        android:src="@drawable/ic_arrow_back"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="56dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSave"
@@ -55,4 +75,4 @@
         app:trackThickness="2dp"
         tools:visibility="visible" />
 
-</com.cornershop.counterstest.presentation.widgets.CreateCounterToolbar>
+</com.cornershop.counterstest.presentation.widgets.CounterToolbar>

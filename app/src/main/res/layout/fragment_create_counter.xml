@@ -43,7 +43,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/create_counter_toolbar"
+        layout="@layout/counter_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -18,6 +18,9 @@
     </string-array>
 
     <!-- Others -->
+    <string name="drinks_title">Drinks</string>
+    <string name="food_title">Food</string>
+    <string name="misc_title">Misc</string>
     <string name="app_name">Counters Test</string>
     <string name="welcome_title">Counters</string>
     <string name="welcome_description">Capture cups of lattes, frapuccinos, or anything else that can be counted.</string>

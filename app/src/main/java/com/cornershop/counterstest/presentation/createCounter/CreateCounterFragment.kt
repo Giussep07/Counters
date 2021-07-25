@@ -1,7 +1,6 @@
 package com.cornershop.counterstest.presentation.createCounter
 
 import android.os.Bundle
-import android.text.Spannable
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
@@ -19,7 +18,6 @@ import com.cornershop.counterstest.databinding.FragmentCreateCounterBinding
 import com.cornershop.counterstest.di.viewModel.ViewModelFactory
 import com.cornershop.counterstest.presentation.base.BaseBindingFragment
 import com.cornershop.counterstest.presentation.state.createCounter.CreateCounterUiState
-import com.cornershop.counterstest.presentation.widgets.CreateCounterToolbar
 import javax.inject.Inject
 
 class CreateCounterFragment : BaseBindingFragment<FragmentCreateCounterBinding>() {
@@ -61,7 +59,8 @@ class CreateCounterFragment : BaseBindingFragment<FragmentCreateCounterBinding>(
 
     private fun setupToolbar() {
         binding.toolbar.root.apply {
-            setBackClickListener { findNavController().popBackStack() }
+            setToolbarTitle(getString(R.string.create_counter))
+            setCloseClickListener { findNavController().popBackStack() }
             setSaveClickListener {
                 viewModel.createCounter(binding.tieCounterName.text.toString())
             }
