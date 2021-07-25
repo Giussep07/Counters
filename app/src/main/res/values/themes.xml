@@ -17,4 +17,74 @@
     <style name="Theme.CountersWelcome" parent="Theme.CountersNormal">
         <item name="android:windowBackground">@color/welcome_background</item>
     </style>
+
+    <!-- region Heading -->
+
+    <!-- region Heading 5 -->
+    <style name="TextAppearance.Counter.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:textSize">22sp</item>
+        <item name="lineHeight">26sp</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="TextAppearance.Counter.Headline5.Bold">
+        <item name="fontFamily">@font/roboto_bold</item>
+    </style>
+
+    <style name="TextAppearance.Counter.Headline5.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <!-- endregion Heading 5 -->
+
+    <!-- region Heading 6 -->
+    <style name="TextAppearance.Counter.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:textSize">20sp</item>
+        <item name="lineHeight">22sp</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="TextAppearance.Counter.Headline6.Bold">
+        <item name="fontFamily">@font/roboto_bold</item>
+    </style>
+
+    <style name="TextAppearance.Counter.Headline6.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <!-- endregion Heading 6 -->
+    <!-- endregion Heading -->
+
+    <!-- region Body -->
+
+    <!-- region Body 1 -->
+    <style name="TextAppearance.Counter.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:textSize">16sp</item>
+        <item name="lineHeight">20sp</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="TextAppearance.Counter.Body1.Bold" parent="TextAppearance.Counter.Body1">
+        <item name="fontFamily">@font/roboto_bold</item>
+    </style>
+
+    <style name="TextAppearance.Counter.Body1.White" parent="TextAppearance.Counter.Body1">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextAppearance.Counter.Body1.Gray" parent="TextAppearance.Counter.Body1">
+        <item name="android:textColor">@color/gray</item>
+    </style>
+
+    <style name="TextAppearance.Counter.Body1.Gray.Bold" parent="TextAppearance.Counter.Body1.Gray">
+        <item name="fontFamily">@font/roboto_bold</item>
+    </style>
+
+    <!-- endregion Body 1 -->
+
+    <!-- endregion Body -->
 </resources>

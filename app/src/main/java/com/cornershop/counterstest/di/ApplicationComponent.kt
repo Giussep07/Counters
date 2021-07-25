@@ -2,6 +2,7 @@ package com.cornershop.counterstest.di
 
 import android.app.Application
 import com.cornershop.counterstest.app.CountersTestApp
+import com.cornershop.counterstest.di.mapper.MapperModel
 import com.cornershop.counterstest.di.source.RemoteSourceModule
 import com.cornershop.counterstest.di.viewModel.ViewModelModule
 import dagger.BindsInstance
@@ -18,7 +19,8 @@ import javax.inject.Singleton
     FragmentsBindingModule::class,
     ViewModelModule::class,
     RepositoryModule::class,
-    RemoteSourceModule::class
+    RemoteSourceModule::class,
+    MapperModel::class
 ])
 interface ApplicationComponent : AndroidInjector<CountersTestApp> {
 

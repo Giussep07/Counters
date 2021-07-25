@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/space_16">
+
+    <TextView
+        android:id="@+id/textViewCounterName"
+        style="@style/TextAppearance.Counter.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imageViewDecrease"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/lorem[3]" />
+
+    <ImageView
+        android:id="@+id/imageViewDecrease"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_8"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/space_8"
+        android:src="@drawable/ic_remove"
+        app:layout_constraintEnd_toStartOf="@+id/textViewCounterCount"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/btn_decrease_selector" />
+
+    <TextView
+        android:id="@+id/textViewCounterCount"
+        style="@style/TextAppearance.Counter.Headline6.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_8"
+        android:textColor="@color/text_count_selector"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewIncrease"
+        app:layout_constraintTop_toTopOf="@id/imageViewIncrease"
+        app:layout_constraintBottom_toBottomOf="@id/imageViewIncrease"
+        tools:text="99" />
+
+    <ImageView
+        android:id="@+id/imageViewIncrease"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/space_8"
+        android:src="@drawable/ic_plus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/orange" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

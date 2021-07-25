@@ -10,7 +10,7 @@
         android:id="@+id/imageLogo"
         android:layout_width="@dimen/welcome_logo_size"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_big_2"
+        android:layout_marginTop="@dimen/space_90"
         android:src="@drawable/ic_welcome_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

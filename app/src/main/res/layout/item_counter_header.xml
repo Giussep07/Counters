@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/space_16"
+    android:paddingTop="@dimen/space_16"
+    android:paddingEnd="0dp">
+
+    <TextView
+        android:id="@+id/textViewItems"
+        style="@style/TextAppearance.Counter.Body1.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_8"
+        tools:text="4 items" />
+
+    <TextView
+        android:id="@+id/textViewTimes"
+        style="@style/TextAppearance.Counter.Body1.Gray.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="17 times" />
+
+</LinearLayout>
