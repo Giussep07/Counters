@@ -2,6 +2,7 @@ package com.cornershop.counterstest.data.apiService
 
 import com.cornershop.counterstest.data.model.request.CounterDecreaseRequestModel
 import com.cornershop.counterstest.data.model.request.CounterIncreaseRequestModel
+import com.cornershop.counterstest.data.model.request.CreateCounterRequestModel
 import com.cornershop.counterstest.data.model.response.CounterResponseModel
 import retrofit2.Response
 import retrofit2.http.Body
@@ -17,4 +18,7 @@ interface CountersApi {
 
     @POST("v1/counter/inc")
     suspend fun increaseCounter(@Body counterIncreaseRequestModel: CounterIncreaseRequestModel): Response<List<CounterResponseModel>>
+
+    @POST("v1/counter")
+    suspend fun createCounter(@Body createCounterRequestModel: CreateCounterRequestModel): Response<List<CounterResponseModel>>
 }

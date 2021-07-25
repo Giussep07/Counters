@@ -20,5 +20,23 @@
         android:id="@+id/homeFragment"
         android:name="com.cornershop.counterstest.presentation.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_createCounterFragment"
+            app:destination="@id/createCounterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createCounterFragment"
+        android:name="com.cornershop.counterstest.presentation.createCounter.CreateCounterFragment"
+        android:label="fragment_create_counter"
+        tools:layout="@layout/fragment_create_counter" >
+        <action
+            android:id="@+id/action_createCounterFragment_to_examplesFragment"
+            app:destination="@id/examplesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/examplesFragment"
+        android:name="com.cornershop.counterstest.presentation.examples.ExamplesFragment"
+        android:label="fragment_examples"
+        tools:layout="@layout/fragment_examples" />
 </navigation>

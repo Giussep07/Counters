@@ -4,9 +4,9 @@ import com.cornershop.counterstest.data.apiService.CountersApi
 import com.cornershop.counterstest.data.mapper.CounterRemoteMapper
 import com.cornershop.counterstest.data.model.request.CounterDecreaseRequestModel
 import com.cornershop.counterstest.data.model.request.CounterIncreaseRequestModel
-import com.cornershop.counterstest.presentation.state.HomeDecreaseCounterUiState
-import com.cornershop.counterstest.presentation.state.HomeIncreaseCounterUiState
-import com.cornershop.counterstest.presentation.state.HomeUiState
+import com.cornershop.counterstest.presentation.state.home.HomeDecreaseCounterUiState
+import com.cornershop.counterstest.presentation.state.home.HomeIncreaseCounterUiState
+import com.cornershop.counterstest.presentation.state.home.HomeUiState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow

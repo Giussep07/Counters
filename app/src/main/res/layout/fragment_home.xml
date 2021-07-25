@@ -5,6 +5,7 @@
     android:id="@+id/srlCounters"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".presentation.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,16 +34,48 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textViewError"
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ha ocurrido un error, intentelo nuevamente"
             android:visibility="gone"
+            app:constraint_referenced_ids="textViewErrorTitle,textViewErrorDescription,btnRetry"/>
+
+        <TextView
+            android:id="@+id/textViewErrorTitle"
+            style="@style/TextAppearance.Counter.Headline5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_48"
+            android:layout_marginBottom="@dimen/space_20"
+            android:text="@string/error_load_counters_title"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@id/textViewErrorDescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/textViewErrorDescription"
+            android:layout_width="wrap_content"
+            style="@style/TextAppearance.Counter.Body1.Gray"
+            android:layout_height="wrap_content"
+            android:text="@string/generic_error_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/textViewErrorTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRetry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Counter.Widget.Button.Primary.Text"
+            android:text="@string/retry"
+            app:layout_constraintTop_toBottomOf="@id/textViewErrorDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/groupNoContent"
@@ -58,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_48"
             android:layout_marginBottom="@dimen/space_20"
-            android:text="No counters yet"
+            android:text="@string/no_counters"
             android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@id/textViewNoContentDescription"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,12 +104,24 @@
             style="@style/TextAppearance.Counter.Body1.Gray"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="“When I started counting my blessings, my whole life turned around.”\n—Willie Nelson"
+            android:text="@string/no_counters_phrase"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/textViewNoContentTitle"
             app:layout_constraintStart_toStartOf="@id/textViewNoContentTitle"
             app:layout_constraintTop_toBottomOf="@id/textViewNoContentTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_counters"
+            app:icon="@drawable/ic_plus"
+            style="@style/Counter.Widget.Button.Floating"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="@dimen/space_32"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

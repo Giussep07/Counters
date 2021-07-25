@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cornershop.counterstest.domain.repository.HomeRepository
 import com.cornershop.counterstest.presentation.model.CounterItem
-import com.cornershop.counterstest.presentation.state.HomeDecreaseCounterUiState
-import com.cornershop.counterstest.presentation.state.HomeIncreaseCounterUiState
-import com.cornershop.counterstest.presentation.state.HomeUiState
+import com.cornershop.counterstest.presentation.state.home.HomeDecreaseCounterUiState
+import com.cornershop.counterstest.presentation.state.home.HomeIncreaseCounterUiState
+import com.cornershop.counterstest.presentation.state.home.HomeUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

@@ -2,9 +2,9 @@ package com.cornershop.counterstest.data.repository
 
 import com.cornershop.counterstest.data.remoteSource.home.HomeRemoteDataSource
 import com.cornershop.counterstest.domain.repository.HomeRepository
-import com.cornershop.counterstest.presentation.state.HomeDecreaseCounterUiState
-import com.cornershop.counterstest.presentation.state.HomeIncreaseCounterUiState
-import com.cornershop.counterstest.presentation.state.HomeUiState
+import com.cornershop.counterstest.presentation.state.home.HomeDecreaseCounterUiState
+import com.cornershop.counterstest.presentation.state.home.HomeIncreaseCounterUiState
+import com.cornershop.counterstest.presentation.state.home.HomeUiState
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

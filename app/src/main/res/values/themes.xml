@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.CountersNormal" parent="Theme.MaterialComponents.DayNight">
+    <style name="Theme.CountersNormal" parent="Theme.MaterialComponents.Light">
+        <item name="android:windowBackground">@color/orange_87</item>
+        <item name="android:colorBackground">@color/orange</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/orange</item>
         <item name="colorOnPrimary">@color/black</item>
@@ -86,5 +88,66 @@
 
     <!-- endregion Body 1 -->
 
+    <!-- region Body 2 -->
+    <style name="TextAppearance.Counter.Body2" parent="TextAppearance.Counter.Body1">
+        <item name="android:textSize">14sp</item>
+        <item name="lineHeight">20sp</item>
+    </style>
+
+    <style name="TextAppearance.Counter.Body2.Gray">
+        <item name="android:textColor">@color/gray</item>
+    </style>
+    <!-- endregion Body 2 -->
+
     <!-- endregion Body -->
+
+    <!-- region Buttons -->
+
+    <style name="Counter.Widget.Button.Primary.Text" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textAppearance">@style/TextAppearance.Counter.Body1.Bold</item>
+        <item name="android:textColor">@color/orange</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="Counter.Widget.Button.Primary.Text.Body2" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textAppearance">@style/TextAppearance.Counter.Body2</item>
+        <item name="android:textColor">@color/orange</item>
+    </style>
+
+    <style name="Counter.Widget.Button.Primary.Text.Body2.Bold" parent="Counter.Widget.Button.Primary.Text.Body2">
+        <item name="fontFamily">@font/roboto_bold</item>
+    </style>
+
+    <style name="Counter.Widget.Button.Floating" parent="Widget.MaterialComponents.Button">
+        <item name="iconTint">@color/white</item>
+        <item name="cornerRadius">22dp</item>
+        <item name="android:inset">@dimen/space_8</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textColor">@color/button_text_color_white_selector</item>
+        <item name="android:minHeight">44dp</item>
+        <item name="backgroundTint">@color/orange_button_color_selector</item>
+        <item name="elevation">10dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:drawablePadding">8dp</item>
+    </style>
+
+    <!-- endregion Buttons -->
+
+    <style name="Counter.Widget.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:minHeight">52dp</item>
+    </style>
+
+    <style name="Counter.Widget.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:textColorHint">@color/orange_87</item>
+        <item name="boxStrokeColor">@color/orange</item>
+        <item name="hintTextColor">@color/orange_87</item>
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+        <item name="expandedHintEnabled">false</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
 </resources>

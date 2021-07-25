@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.cornershop.counterstest.databinding.FragmentWelcomeBinding
-import com.cornershop.counterstest.presentation.base.BindingFragment
+import com.cornershop.counterstest.presentation.base.BaseBindingFragment
 
-class WelcomeFragment : BindingFragment<FragmentWelcomeBinding>() {
+class WelcomeFragment : BaseBindingFragment<FragmentWelcomeBinding>() {
 
     override fun bindView(inflater: LayoutInflater, container: ViewGroup?): FragmentWelcomeBinding =
             FragmentWelcomeBinding.inflate(inflater, container, false)

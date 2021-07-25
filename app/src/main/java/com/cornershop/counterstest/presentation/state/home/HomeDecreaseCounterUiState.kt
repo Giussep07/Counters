@@ -1,4 +1,4 @@
-package com.cornershop.counterstest.presentation.state
+package com.cornershop.counterstest.presentation.state.home
 
 import com.cornershop.counterstest.domain.model.Counter
 

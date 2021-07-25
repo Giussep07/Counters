@@ -2,6 +2,8 @@ package com.cornershop.counterstest.di.source
 
 import com.cornershop.counterstest.data.apiService.CountersApi
 import com.cornershop.counterstest.data.mapper.CounterRemoteMapper
+import com.cornershop.counterstest.data.remoteSource.createCounter.CreateCounterRemoteDataSource
+import com.cornershop.counterstest.data.remoteSource.createCounter.CreateCounterRemoteDataSourceImpl
 import com.cornershop.counterstest.data.remoteSource.home.HomeRemoteDataSource
 import com.cornershop.counterstest.data.remoteSource.home.HomeRemoteDataSourceImpl
 import dagger.Module
@@ -15,6 +17,12 @@ class RemoteSourceModule {
     @Provides
     fun provideHomeRemoteDataSource(countersApi: CountersApi, counterRemoteMapper: CounterRemoteMapper): HomeRemoteDataSource {
         return HomeRemoteDataSourceImpl(countersApi, counterRemoteMapper)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCreateCounterRemoteDataSource(countersApi: CountersApi, counterRemoteMapper: CounterRemoteMapper): CreateCounterRemoteDataSource {
+        return CreateCounterRemoteDataSourceImpl(countersApi, counterRemoteMapper)
     }
 
     @Singleton

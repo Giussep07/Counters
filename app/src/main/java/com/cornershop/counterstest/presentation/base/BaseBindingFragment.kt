@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 import dagger.android.support.DaggerFragment
 
-abstract class BindingFragment<B : ViewBinding> : DaggerFragment() {
+abstract class BaseBindingFragment<B : ViewBinding> : DaggerFragment() {
 
     private var _binding: B? = null
     protected val binding get() = _binding!!

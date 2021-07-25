@@ -1,8 +1,8 @@
 package com.cornershop.counterstest.data.remoteSource.home
 
-import com.cornershop.counterstest.presentation.state.HomeDecreaseCounterUiState
-import com.cornershop.counterstest.presentation.state.HomeIncreaseCounterUiState
-import com.cornershop.counterstest.presentation.state.HomeUiState
+import com.cornershop.counterstest.presentation.state.home.HomeDecreaseCounterUiState
+import com.cornershop.counterstest.presentation.state.home.HomeIncreaseCounterUiState
+import com.cornershop.counterstest.presentation.state.home.HomeUiState
 import kotlinx.coroutines.flow.Flow
 
 interface HomeRemoteDataSource {

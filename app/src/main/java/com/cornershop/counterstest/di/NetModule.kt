@@ -19,7 +19,7 @@ class NetModule {
     @Singleton
     @Provides
     fun provideRetrofit(gson: Gson): Retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.1.10:3000/api/")
+        .baseUrl("http://192.168.0.4:3000/api/")
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
