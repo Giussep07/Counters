@@ -54,6 +54,7 @@ class ExamplesFragment : BaseBindingFragment<FragmentExamplesBinding>(), Example
 
     private fun setupToolbar() {
         binding.toolbar.root.apply {
+            hideShadow()
             setToolbarTitle(getString(R.string.examples))
             showBackButton()
             setBackClickListener { findNavController().popBackStack() }

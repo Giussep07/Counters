@@ -1,18 +1,23 @@
 package com.cornershop.counterstest.presentation.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import android.view.ActionMode
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StorageStrategy
 import com.cornershop.counterstest.R
 import com.cornershop.counterstest.databinding.FragmentHomeBinding
 import com.cornershop.counterstest.di.viewModel.ViewModelFactory
 import com.cornershop.counterstest.presentation.base.BaseBindingFragment
 import com.cornershop.counterstest.presentation.home.adapter.CounterAdapter
+import com.cornershop.counterstest.presentation.home.adapter.CounterDetailsLookup
+import com.cornershop.counterstest.presentation.home.adapter.CounterItemKeyProvider
 import com.cornershop.counterstest.presentation.mapper.CounterPresentationMapper
 import com.cornershop.counterstest.presentation.model.CounterItem
 import com.cornershop.counterstest.presentation.state.home.HomeDecreaseCounterUiState
@@ -30,6 +35,8 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
 
     private val viewModel: HomeViewModel by viewModels { viewModelFactory }
     private lateinit var adapter: CounterAdapter
+    private lateinit var tracker: SelectionTracker<String>
+    private var actionMode: ActionMode? = null
 
     override fun bindView(inflater: LayoutInflater, container: ViewGroup?): FragmentHomeBinding =
         FragmentHomeBinding.inflate(layoutInflater, container, false)
@@ -136,6 +143,33 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
         binding.rvCounters.adapter = CounterAdapter(requireContext(), this).also {
             adapter = it
         }
+
+        tracker = SelectionTracker.Builder(
+            "counter-tracker",
+            binding.rvCounters,
+            CounterItemKeyProvider(adapter),
+            CounterDetailsLookup(binding.rvCounters),
+            StorageStrategy.createStringStorage()
+        ).build()
+
+        tracker.addObserver(object : SelectionTracker.SelectionObserver<String>() {
+            override fun onSelectionChanged() {
+                if (tracker.hasSelection()) {
+                    if (actionMode == null) {
+                        actionMode = (requireActivity() as AppCompatActivity).startActionMode(actionModeCallback)
+                    }
+                    updateContextualActionBarTitle()
+                } else {
+                    actionMode?.finish()
+                }
+            }
+        })
+
+        adapter.selectionTracker = tracker
+    }
+
+    private fun updateContextualActionBarTitle() {
+        actionMode?.title = getString(R.string.n_selected, tracker.selection.size())
     }
 
     private fun setupRefreshLayout() {
@@ -145,4 +179,40 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
             viewModel.getCounters()
         }
     }
+
+    private val actionModeCallback = object : ActionMode.Callback {
+        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
+            mode.menuInflater.inflate(R.menu.home_menu, menu)
+            return true
+        }
+
+        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
+            return false
+        }
+
+        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+            return when (item.itemId) {
+                R.id.option_delete -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Eliminar",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                    true
+                }
+                R.id.option_share -> {
+                    Toast.makeText(requireContext(), "Compartir", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }
+        }
+
+        override fun onDestroyActionMode(mode: ActionMode?) {
+            tracker.clearSelection()
+            actionMode = null
+        }
+    }
+
 }

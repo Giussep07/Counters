@@ -3,6 +3,9 @@ package com.cornershop.counterstest.presentation.home.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.recyclerview.selection.ItemDetailsLookup
+import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.cornershop.counterstest.R
@@ -12,6 +15,14 @@ import com.cornershop.counterstest.presentation.model.CounterItem
 
 class CounterAdapter(private val context: Context, private val listener: CounterAdapterListener) :
     ListAdapter<CounterItem, RecyclerView.ViewHolder>(CounterItem.DiffCallback) {
+
+    lateinit var selectionTracker: SelectionTracker<String>
+
+    init {
+        setHasStableIds(true)
+    }
+
+    override fun getItemId(position: Int): Long = position.toLong()
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
@@ -39,7 +50,7 @@ class CounterAdapter(private val context: Context, private val listener: Counter
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
             is CounterItem.CounterHeaderUiModel -> (holder as CounterHeaderVH).bind(item)
-            is CounterItem.CounterUiModel -> (holder as CounterVH).bind(item)
+            is CounterItem.CounterUiModel -> (holder as CounterVH).bind(item, selectionTracker.isSelected(item.id))
         }
     }
 
@@ -54,7 +65,7 @@ class CounterAdapter(private val context: Context, private val listener: Counter
     inner class CounterVH(private val binding: ItemCounterBinding, private val listener: CounterAdapterListener) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(counterUiModel: CounterItem.CounterUiModel) {
+        fun bind(counterUiModel: CounterItem.CounterUiModel, isActivated: Boolean) {
             binding.textViewCounterName.text = counterUiModel.title
             binding.textViewCounterCount.text = counterUiModel.count.toString()
 
@@ -64,7 +75,20 @@ class CounterAdapter(private val context: Context, private val listener: Counter
             binding.imageViewIncrease.setOnClickListener { listener.onIncreaseClicked(counterUiModel) }
 
             binding.imageViewDecrease.setOnClickListener { listener.onDecreaseClicked(counterUiModel) }
+
+            binding.clItemCounter.isActivated = isActivated
+            binding.groupButtons.isVisible = !isActivated
+            binding.imageViewCheck.isVisible = isActivated
         }
+
+        fun getItemDetails(): ItemDetailsLookup.ItemDetails<String> =
+            object : ItemDetailsLookup.ItemDetails<String>() {
+                override fun getPosition(): Int = adapterPosition
+                override fun getSelectionKey(): String? = when (val item = getItem(adapterPosition)) {
+                    is CounterItem.CounterUiModel -> item.id
+                    else -> null
+                }
+            }
     }
 
     interface CounterAdapterListener {

@@ -2,6 +2,7 @@
 <resources>
     <color name="orange">#FF9500</color>
     <color name="orange_disabled">#80FF9500</color>
+    <color name="orange_20">#33FF9500</color>
     <color name="orange_87">#DEFF9500</color>
 
     <color name="white">#FFFFFF</color>

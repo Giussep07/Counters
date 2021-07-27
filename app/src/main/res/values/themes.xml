@@ -1,8 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.CountersNormal" parent="Theme.MaterialComponents.Light">
-        <item name="android:windowBackground">@color/orange_87</item>
-        <item name="android:colorBackground">@color/orange</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/orange</item>
         <item name="colorOnPrimary">@color/black</item>
@@ -140,6 +138,8 @@
 
     <style name="Counter.Widget.Toolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="android:minHeight">52dp</item>
+        <item name="android:elevation">@dimen/toolbar_elevation</item>
+        <item name="android:background">@color/white</item>
     </style>
 
     <style name="Counter.Widget.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
@@ -149,5 +149,9 @@
         <item name="boxBackgroundColor">@android:color/transparent</item>
         <item name="expandedHintEnabled">false</item>
         <item name="boxStrokeWidth">2dp</item>
+    </style>
+
+    <style name="Counter.ActionModeCloseButtonStyle" parent="Widget.AppCompat.Light.ActionButton.CloseMode">
+        <item name="android:tint">@color/orange</item>
     </style>
 </resources>

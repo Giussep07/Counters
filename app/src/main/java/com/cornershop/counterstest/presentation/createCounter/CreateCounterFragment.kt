@@ -2,13 +2,14 @@ package com.cornershop.counterstest.presentation.createCounter
 
 import android.os.Bundle
 import android.text.SpannableString
+import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -59,6 +60,7 @@ class CreateCounterFragment : BaseBindingFragment<FragmentCreateCounterBinding>(
 
     private fun setupToolbar() {
         binding.toolbar.root.apply {
+            hideShadow()
             setToolbarTitle(getString(R.string.create_counter))
             setCloseClickListener { findNavController().popBackStack() }
             setSaveClickListener {
@@ -74,12 +76,16 @@ class CreateCounterFragment : BaseBindingFragment<FragmentCreateCounterBinding>(
         binding.textViewDisclaimer.text = SpannableString(disclaimer).apply {
             val startFrom = disclaimer.indexOf(exampleLink)
             val endTo = startFrom + exampleLink.length
-            setSpan(UnderlineSpan(), startFrom, endTo, 0)
             setSpan(
                     object : ClickableSpan() {
                         override fun onClick(p0: View) {
                             this@CreateCounterFragment.findNavController()
                                     .navigate(CreateCounterFragmentDirections.actionCreateCounterFragmentToExamplesFragment())
+                        }
+
+                        override fun updateDrawState(ds: TextPaint) {
+                            ds.color = ContextCompat.getColor(requireContext(), R.color.gray)
+                            ds.isUnderlineText = true
                         }
                     },
                     startFrom, endTo, 0
