@@ -1,5 +1,6 @@
 package com.cornershop.counterstest.di.mapper
 
+import android.content.Context
 import com.cornershop.counterstest.presentation.mapper.CounterPresentationMapper
 import dagger.Module
 import dagger.Provides
@@ -10,5 +11,5 @@ class MapperModel {
 
     @Singleton
     @Provides
-    fun provideCounterPresentationMapper(): CounterPresentationMapper = CounterPresentationMapper()
+    fun provideCounterPresentationMapper(context: Context): CounterPresentationMapper = CounterPresentationMapper(context)
 }

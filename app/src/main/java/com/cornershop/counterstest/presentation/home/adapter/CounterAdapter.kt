@@ -16,7 +16,7 @@ import com.cornershop.counterstest.presentation.model.CounterItem
 class CounterAdapter(private val context: Context, private val listener: CounterAdapterListener) :
     ListAdapter<CounterItem, RecyclerView.ViewHolder>(CounterItem.DiffCallback) {
 
-    lateinit var selectionTracker: SelectionTracker<String>
+    lateinit var selectionTracker: SelectionTracker<CounterItem.CounterUiModel>
 
     init {
         setHasStableIds(true)
@@ -50,7 +50,7 @@ class CounterAdapter(private val context: Context, private val listener: Counter
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = getItem(position)) {
             is CounterItem.CounterHeaderUiModel -> (holder as CounterHeaderVH).bind(item)
-            is CounterItem.CounterUiModel -> (holder as CounterVH).bind(item, selectionTracker.isSelected(item.id))
+            is CounterItem.CounterUiModel -> (holder as CounterVH).bind(item, selectionTracker.isSelected(item))
         }
     }
 
@@ -81,11 +81,11 @@ class CounterAdapter(private val context: Context, private val listener: Counter
             binding.imageViewCheck.isVisible = isActivated
         }
 
-        fun getItemDetails(): ItemDetailsLookup.ItemDetails<String> =
-            object : ItemDetailsLookup.ItemDetails<String>() {
+        fun getItemDetails(): ItemDetailsLookup.ItemDetails<CounterItem.CounterUiModel> =
+            object : ItemDetailsLookup.ItemDetails<CounterItem.CounterUiModel>() {
                 override fun getPosition(): Int = adapterPosition
-                override fun getSelectionKey(): String? = when (val item = getItem(adapterPosition)) {
-                    is CounterItem.CounterUiModel -> item.id
+                override fun getSelectionKey(): CounterItem.CounterUiModel? = when (val item = getItem(adapterPosition)) {
+                    is CounterItem.CounterUiModel -> item
                     else -> null
                 }
             }

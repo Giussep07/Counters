@@ -54,6 +54,10 @@
     <string name="counter_name_hint">Cups of coffee</string>
     <string name="create_counter_disclaimer">Give it a name. Creative block? See examples.</string>
     <string name="create_counter_disclaimer_examples">examples</string>
-    <string name="delete_x_question">Delete "%s"?</string>
+    <string name="delete_one_question">Delete "%s"?</string>
+    <string name="delete_x_question">Delete %d counters?</string>
     <string name="n_per_counter_name">%d × %s</string>
+    <string name="copy">Copy</string>
+    <string name="under_construction">Feature under construction</string>
+    <string name="content_copied">Content copied to clipboard</string>
 </resources>

@@ -1,9 +1,12 @@
 package com.cornershop.counterstest.presentation.mapper
 
+import android.content.Context
+import com.cornershop.counterstest.R
 import com.cornershop.counterstest.domain.model.Counter
 import com.cornershop.counterstest.presentation.model.CounterItem
+import com.cornershop.counterstest.presentation.model.CounterToShare
 
-class CounterPresentationMapper {
+class CounterPresentationMapper(private val context: Context) {
     fun toUiModel(counters: List<Counter>): List<CounterItem> {
         val countersMutable = mutableListOf<CounterItem>()
 
@@ -21,5 +24,9 @@ class CounterPresentationMapper {
         })
 
         return countersMutable
+    }
+
+    fun fromUIModelToCounterToShare(counters: List<CounterItem.CounterUiModel>) : List<CounterToShare> {
+        return counters.map { CounterToShare(it.id, context.getString(R.string.n_per_counter_name, it.count, it.title)) }
     }
 }

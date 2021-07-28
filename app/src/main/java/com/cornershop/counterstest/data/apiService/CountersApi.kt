@@ -3,11 +3,10 @@ package com.cornershop.counterstest.data.apiService
 import com.cornershop.counterstest.data.model.request.CounterDecreaseRequestModel
 import com.cornershop.counterstest.data.model.request.CounterIncreaseRequestModel
 import com.cornershop.counterstest.data.model.request.CreateCounterRequestModel
+import com.cornershop.counterstest.data.model.request.DeleteCounterRequestModel
 import com.cornershop.counterstest.data.model.response.CounterResponseModel
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface CountersApi {
     @GET("v1/counters")
@@ -21,4 +20,7 @@ interface CountersApi {
 
     @POST("v1/counter")
     suspend fun createCounter(@Body createCounterRequestModel: CreateCounterRequestModel): Response<List<CounterResponseModel>>
+
+    @HTTP(method = "DELETE", path = "v1/counter", hasBody = true)
+    suspend fun deleteCounter(@Body deleteCounterRequestModel: DeleteCounterRequestModel): Response<List<CounterResponseModel>>
 }

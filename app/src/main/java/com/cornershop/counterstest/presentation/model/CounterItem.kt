@@ -1,12 +1,15 @@
 package com.cornershop.counterstest.presentation.model
 
+import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
+import kotlinx.android.parcel.Parcelize
 
 sealed class CounterItem {
 
     data class CounterHeaderUiModel(val items: Int, val times: Int) : CounterItem()
 
-    data class CounterUiModel(val id: String, val title: String, val count: Int) : CounterItem()
+    @Parcelize
+    data class CounterUiModel(val id: String, val title: String, val count: Int) : CounterItem(), Parcelable
 
     companion object {
         val DiffCallback = object : DiffUtil.ItemCallback<CounterItem>() {

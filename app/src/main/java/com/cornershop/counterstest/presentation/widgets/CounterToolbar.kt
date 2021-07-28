@@ -31,12 +31,12 @@ class CounterToolbar(context: Context, attributeSet: AttributeSet) :
 
     fun showLoading() {
         btnSave.isInvisible = true
-        progressLoading.isVisible = true
+        toolbarProgressLoading.isVisible = true
     }
 
     fun hideLoading() {
         btnSave.isVisible = true
-        progressLoading.isGone = true
+        toolbarProgressLoading.isGone = true
     }
 
     fun hideSaveButton() {

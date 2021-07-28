@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.cornershop.counterstest.domain.repository.HomeRepository
 import com.cornershop.counterstest.presentation.model.CounterItem
 import com.cornershop.counterstest.presentation.state.home.HomeDecreaseCounterUiState
+import com.cornershop.counterstest.presentation.state.home.HomeDeleteCounterUiState
 import com.cornershop.counterstest.presentation.state.home.HomeIncreaseCounterUiState
 import com.cornershop.counterstest.presentation.state.home.HomeUiState
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +29,10 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     val homeIncreaseUiState: LiveData<HomeIncreaseCounterUiState>
         get() = _homeIncreaseUiState
 
+    private val _homeDeleteUiState = MutableLiveData<HomeDeleteCounterUiState>()
+    val homeDeleteUiState: LiveData<HomeDeleteCounterUiState>
+        get() = _homeDeleteUiState
+
     fun getCounters() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getCounters().collect {
@@ -48,6 +53,14 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
         viewModelScope.launch(Dispatchers.IO) {
             repository.increaseCounter(counterUiModel.id).collect {
                 _homeIncreaseUiState.postValue(it)
+            }
+        }
+    }
+
+    fun deleteCounters(countersSelected: List<CounterItem.CounterUiModel>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteCounters(countersSelected.map { it.id }).collect {
+                _homeDeleteUiState.postValue(it)
             }
         }
     }

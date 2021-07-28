@@ -20,9 +20,13 @@ import com.cornershop.counterstest.presentation.home.adapter.CounterDetailsLooku
 import com.cornershop.counterstest.presentation.home.adapter.CounterItemKeyProvider
 import com.cornershop.counterstest.presentation.mapper.CounterPresentationMapper
 import com.cornershop.counterstest.presentation.model.CounterItem
+import com.cornershop.counterstest.presentation.model.PeopleToShare
+import com.cornershop.counterstest.presentation.share.ShareCounterBottomSheetDialogFragment
 import com.cornershop.counterstest.presentation.state.home.HomeDecreaseCounterUiState
+import com.cornershop.counterstest.presentation.state.home.HomeDeleteCounterUiState
 import com.cornershop.counterstest.presentation.state.home.HomeIncreaseCounterUiState
 import com.cornershop.counterstest.presentation.state.home.HomeUiState
+import com.cornershop.counterstest.presentation.utils.AlertDialogUtil
 import javax.inject.Inject
 
 class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
@@ -35,7 +39,7 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
 
     private val viewModel: HomeViewModel by viewModels { viewModelFactory }
     private lateinit var adapter: CounterAdapter
-    private lateinit var tracker: SelectionTracker<String>
+    private lateinit var tracker: SelectionTracker<CounterItem.CounterUiModel>
     private var actionMode: ActionMode? = null
 
     override fun bindView(inflater: LayoutInflater, container: ViewGroup?): FragmentHomeBinding =
@@ -129,6 +133,37 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
                 }
             }
         }
+
+        viewModel.homeDeleteUiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is HomeDeleteCounterUiState.Deleting -> {
+                    binding.progressLoading.isVisible = true
+                    binding.groupNoContent.isGone = true
+                    binding.rvCounters.isGone = true
+                    binding.groupError.isGone = true
+                    tracker.clearSelection()
+                    actionMode?.finish()
+                }
+                is HomeDeleteCounterUiState.Success -> {
+                    if (it.counters.isEmpty()) {
+                        binding.progressLoading.isGone = true
+                        binding.groupNoContent.isVisible = true
+                    } else {
+                        binding.progressLoading.isGone = true
+                        binding.rvCounters.isVisible = true
+                        adapter.submitList(counterPresentationMapper.toUiModel(it.counters))
+                    }
+                }
+                is HomeDeleteCounterUiState.Error -> {
+                    binding.progressLoading.isGone = true
+                    binding.groupError.isVisible = true
+                    binding.rvCounters.isGone = true
+                    tracker.clearSelection()
+                    actionMode?.finish()
+                    println("Counter Error: ${it.errorMessage}")
+                }
+            }
+        }
     }
 
     override fun onDecreaseClicked(counterUiModel: CounterItem.CounterUiModel) {
@@ -149,10 +184,10 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
             binding.rvCounters,
             CounterItemKeyProvider(adapter),
             CounterDetailsLookup(binding.rvCounters),
-            StorageStrategy.createStringStorage()
+            StorageStrategy.createParcelableStorage(CounterItem.CounterUiModel::class.java)
         ).build()
 
-        tracker.addObserver(object : SelectionTracker.SelectionObserver<String>() {
+        tracker.addObserver(object : SelectionTracker.SelectionObserver<CounterItem.CounterUiModel>() {
             override fun onSelectionChanged() {
                 if (tracker.hasSelection()) {
                     if (actionMode == null) {
@@ -193,16 +228,11 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             return when (item.itemId) {
                 R.id.option_delete -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Eliminar",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    deleteCounters()
                     true
                 }
                 R.id.option_share -> {
-                    Toast.makeText(requireContext(), "Compartir", Toast.LENGTH_SHORT).show()
+                    showShareBottomSheet()
                     true
                 }
                 else -> false
@@ -213,6 +243,38 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
             tracker.clearSelection()
             actionMode = null
         }
+    }
+
+    private fun deleteCounters() {
+        val countersSelected = tracker.selection.map { it }
+        val title: String = if (countersSelected.size == 1) {
+            getString(R.string.delete_one_question, countersSelected[0].title)
+        } else {
+            getString(R.string.delete_x_question, countersSelected.size)
+        }
+
+        AlertDialogUtil.generalDialog(
+            context = requireContext(),
+            title = null,
+            message = title,
+            textButtonAccept = getString(R.string.delete),
+            textButtonCancel = getString(R.string.cancel),
+            action = {
+                viewModel.deleteCounters(countersSelected)
+            }
+        )
+    }
+
+    private fun showShareBottomSheet() {
+        val countersToShare = counterPresentationMapper.fromUIModelToCounterToShare(tracker.selection.map { it })
+        val peopleToShare = mutableListOf<PeopleToShare>().apply {
+            add(PeopleToShare(1, R.drawable.avatar_alvaro, "Alvaro"))
+            add(PeopleToShare(2, R.drawable.avatar_daniel, "Daniel"))
+            add(PeopleToShare(3, R.drawable.avatar_danito, "Danito"))
+            add(PeopleToShare(4, R.drawable.avatar_gonzalo, "Gonzalo"))
+        }
+
+        ShareCounterBottomSheetDialogFragment.show(childFragmentManager, countersToShare, peopleToShare)
     }
 
 }

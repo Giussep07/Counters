@@ -99,6 +99,14 @@
 
     <!-- endregion Body -->
 
+    <style name="TextAppearance.Counter.Share" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:textSize">18sp</item>
+        <item name="lineHeight">24dp</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
     <!-- region Buttons -->
 
     <style name="Counter.Widget.Button.Primary.Text" parent="Widget.MaterialComponents.Button.TextButton">
