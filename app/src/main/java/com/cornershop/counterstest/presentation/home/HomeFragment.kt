@@ -145,6 +145,8 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
                     actionMode?.finish()
                 }
                 is HomeDeleteCounterUiState.Success -> {
+                    tracker.clearSelection()
+                    actionMode?.finish()
                     if (it.counters.isEmpty()) {
                         binding.progressLoading.isGone = true
                         binding.groupNoContent.isVisible = true

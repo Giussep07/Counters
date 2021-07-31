@@ -1,6 +1,6 @@
 package com.cornershop.counterstest.di
 
-import com.cornershop.counterstest.data.apiService.CountersApi
+import com.cornershop.counterstest.data.network.apiService.CountersApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -19,7 +19,7 @@ class NetModule {
     @Singleton
     @Provides
     fun provideRetrofit(gson: Gson): Retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.0.5:3000/api/")
+        .baseUrl("http://192.168.0.6:3000/api/")
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 

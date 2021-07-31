@@ -7,7 +7,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class MapperModel {
+class MapperModule {
 
     @Singleton
     @Provides

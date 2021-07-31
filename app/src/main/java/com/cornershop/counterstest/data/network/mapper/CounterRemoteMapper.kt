@@ -1,6 +1,6 @@
-package com.cornershop.counterstest.data.mapper
+package com.cornershop.counterstest.data.network.mapper
 
-import com.cornershop.counterstest.data.model.response.CounterResponseModel
+import com.cornershop.counterstest.data.network.model.response.CounterResponseModel
 import com.cornershop.counterstest.domain.model.Counter
 
 class CounterRemoteMapper {

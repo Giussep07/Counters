@@ -1,11 +1,9 @@
 package com.cornershop.counterstest.di.source
 
-import com.cornershop.counterstest.data.apiService.CountersApi
-import com.cornershop.counterstest.data.mapper.CounterRemoteMapper
-import com.cornershop.counterstest.data.remoteSource.createCounter.CreateCounterRemoteDataSource
-import com.cornershop.counterstest.data.remoteSource.createCounter.CreateCounterRemoteDataSourceImpl
-import com.cornershop.counterstest.data.remoteSource.home.HomeRemoteDataSource
-import com.cornershop.counterstest.data.remoteSource.home.HomeRemoteDataSourceImpl
+import com.cornershop.counterstest.data.network.apiService.CountersApi
+import com.cornershop.counterstest.data.network.mapper.CounterRemoteMapper
+import com.cornershop.counterstest.data.network.remoteSource.CounterRemoteDataSource
+import com.cornershop.counterstest.data.network.remoteSource.CounterRemoteDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -15,14 +13,8 @@ class RemoteSourceModule {
 
     @Singleton
     @Provides
-    fun provideHomeRemoteDataSource(countersApi: CountersApi, counterRemoteMapper: CounterRemoteMapper): HomeRemoteDataSource {
-        return HomeRemoteDataSourceImpl(countersApi, counterRemoteMapper)
-    }
-
-    @Singleton
-    @Provides
-    fun provideCreateCounterRemoteDataSource(countersApi: CountersApi, counterRemoteMapper: CounterRemoteMapper): CreateCounterRemoteDataSource {
-        return CreateCounterRemoteDataSourceImpl(countersApi, counterRemoteMapper)
+    fun provideCounterRemoteDataSource(countersApi: CountersApi, counterRemoteMapper: CounterRemoteMapper): CounterRemoteDataSource {
+        return CounterRemoteDataSourceImpl(countersApi, counterRemoteMapper)
     }
 
     @Singleton
