@@ -3,10 +3,7 @@ package com.cornershop.counterstest.presentation.home
 import androidx.lifecycle.*
 import com.cornershop.counterstest.domain.repository.CounterRepository
 import com.cornershop.counterstest.presentation.model.CounterItem
-import com.cornershop.counterstest.presentation.state.home.HomeDecreaseCounterUiState
-import com.cornershop.counterstest.presentation.state.home.HomeDeleteCounterUiState
-import com.cornershop.counterstest.presentation.state.home.HomeIncreaseCounterUiState
-import com.cornershop.counterstest.presentation.state.home.HomeUiState
+import com.cornershop.counterstest.presentation.state.home.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -29,6 +26,10 @@ class HomeViewModel @Inject constructor(private val repository: CounterRepositor
     private val _homeDeleteUiState = MutableLiveData<HomeDeleteCounterUiState>()
     val homeDeleteUiState: LiveData<HomeDeleteCounterUiState>
         get() = _homeDeleteUiState
+
+    private val _homeSearchUiState = MutableLiveData<HomeSearchUiState>()
+    val homeSearchUiState: LiveData<HomeSearchUiState>
+        get() = _homeSearchUiState
 
     fun getCounters() {
         viewModelScope.launch {
@@ -81,6 +82,24 @@ class HomeViewModel @Inject constructor(private val repository: CounterRepositor
                 .collect {
                     _homeDeleteUiState.postValue(it)
                 }
+        }
+    }
+
+    fun searchCounter(query: String) {
+        viewModelScope.launch {
+            flow<HomeSearchUiState> {
+                val result = repository.searchCounter(query)
+
+                if (result.isEmpty()) {
+                    emit(HomeSearchUiState.NoResults)
+                } else {
+                    emit(HomeSearchUiState.Results(result))
+                }
+            }
+                .flowOn(Dispatchers.IO)
+                .collect {
+                _homeSearchUiState.postValue(it)
+            }
         }
     }
 }

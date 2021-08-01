@@ -17,7 +17,6 @@ class CounterRemoteDataSourceImpl @Inject constructor(private val countersApi: C
 ) : CounterRemoteDataSource {
 
     override suspend fun getCounters(): List<Counter> {
-        kotlinx.coroutines.delay(TimeUnit.SECONDS.toMillis(2))
         return counterRemoteMapper.fromRemote(countersApi.getCounters())
     }
 

@@ -22,15 +22,14 @@ import com.cornershop.counterstest.presentation.mapper.CounterPresentationMapper
 import com.cornershop.counterstest.presentation.model.CounterItem
 import com.cornershop.counterstest.presentation.model.PeopleToShare
 import com.cornershop.counterstest.presentation.share.ShareCounterBottomSheetDialogFragment
-import com.cornershop.counterstest.presentation.state.home.HomeDecreaseCounterUiState
-import com.cornershop.counterstest.presentation.state.home.HomeDeleteCounterUiState
-import com.cornershop.counterstest.presentation.state.home.HomeIncreaseCounterUiState
-import com.cornershop.counterstest.presentation.state.home.HomeUiState
+import com.cornershop.counterstest.presentation.state.home.*
 import com.cornershop.counterstest.presentation.utils.AlertDialogUtil
+import com.cornershop.counterstest.presentation.widgets.FloatingSearchView
 import javax.inject.Inject
 
 class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
-    CounterAdapter.CounterAdapterListener {
+    CounterAdapter.CounterAdapterListener,
+    FloatingSearchView.FloatingSearchViewListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -57,6 +56,8 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
         binding.btnAddCounter.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCreateCounterFragment())
         }
+
+        binding.searchView.setListener(this)
 
         viewModel.getCounters()
 
@@ -166,6 +167,20 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
                 }
             }
         }
+
+        viewModel.homeSearchUiState.observe(viewLifecycleOwner) {
+            when (it) {
+                is HomeSearchUiState.NoResults -> {
+                    binding.rvCounters.isVisible = false
+                    binding.textViewNoResults.isVisible = true
+                }
+                is HomeSearchUiState.Results -> {
+                    adapter.submitList(counterPresentationMapper.toUiModel(it.counters))
+                    binding.rvCounters.isVisible = true
+                    binding.textViewNoResults.isVisible = false
+                }
+            }
+        }
     }
 
     override fun onDecreaseClicked(counterUiModel: CounterItem.CounterUiModel) {
@@ -174,6 +189,10 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
 
     override fun onIncreaseClicked(counterUiModel: CounterItem.CounterUiModel) {
         viewModel.increaseCounter(counterUiModel)
+    }
+
+    override fun onQuery(query: String) {
+        viewModel.searchCounter(query)
     }
 
     private fun setupRecyclerView() {

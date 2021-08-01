@@ -14,4 +14,7 @@ interface CounterDao {
 
     @Query("DELETE FROM counter WHERE id IN (:countersIds)")
     fun deleteCounters(countersIds: List<String>)
+
+    @Query("SELECT * FROM counter WHERE title LIKE '%' || :query || '%'")
+    fun searchCounter(query: String): List<CounterEntity>
 }

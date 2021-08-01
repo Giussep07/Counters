@@ -8,4 +8,5 @@ interface CounterRepository {
     suspend fun increaseCounter(id: String): List<Counter>
     suspend fun deleteCounters(ids: List<String>): List<Counter>
     suspend fun createCounter(title: String): List<Counter>
+    suspend fun searchCounter(query: String): List<Counter>
 }

@@ -13,4 +13,8 @@ class CounterLocalDataSourceImpl @Inject constructor(private val countersDao: Co
     override suspend fun deleteCounters(countersId: List<String>) {
         countersDao.deleteCounters(countersId)
     }
+
+    override fun searchCounter(query: String): List<CounterEntity> {
+        return countersDao.searchCounter(query)
+    }
 }

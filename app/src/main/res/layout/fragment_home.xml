@@ -20,12 +20,13 @@
             app:layout_constraintTop_toTopOf="parent"
             android:visibility="invisible"/>
 
-        <androidx.appcompat.widget.SearchView
+        <com.cornershop.counterstest.presentation.widgets.FloatingSearchView
+            android:id="@+id/searchView"
             android:layout_width="0dp"
-            android:layout_height="@dimen/toolbar_min_height"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCounters"
@@ -35,7 +36,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintTop_toBottomOf="@id/searchView"
             tools:listitem="@layout/item_counter" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -137,6 +138,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="@dimen/space_32"/>
+
+        <TextView
+            android:id="@+id/textViewNoResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.Counter.Headline6.Gray.Bold"
+            android:text="@string/no_results"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -7,4 +7,8 @@ class CounterLocalMapper {
     fun fromDomain(counter: Counter): CounterEntity {
         return CounterEntity(counter.id, counter.title, counter.count)
     }
+
+    fun toDomain(counterEntity: CounterEntity): Counter {
+        return Counter(counterEntity.id, counterEntity.title, counterEntity.count)
+    }
 }

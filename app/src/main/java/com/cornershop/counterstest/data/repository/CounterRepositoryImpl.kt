@@ -42,6 +42,10 @@ class CounterRepositoryImpl @Inject constructor(private val counterRemoteDataSou
         return counters
     }
 
+    override suspend fun searchCounter(query: String): List<Counter> {
+        return counterLocalDataSource.searchCounter(query).map { counterLocalMapper.toDomain(it) }
+    }
+
     private suspend fun insertCountersLocally(counters: List<Counter>) {
         counters.map { counterLocalMapper.fromDomain(it) }
             .also { counterLocalDataSource.insertCounters(it) }
