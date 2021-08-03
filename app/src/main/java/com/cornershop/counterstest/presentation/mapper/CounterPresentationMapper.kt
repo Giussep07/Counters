@@ -7,6 +7,7 @@ import com.cornershop.counterstest.presentation.model.CounterItem
 import com.cornershop.counterstest.presentation.model.CounterToShare
 
 class CounterPresentationMapper(private val context: Context) {
+
     fun toUiModel(counters: List<Counter>): List<CounterItem> {
         val countersMutable = mutableListOf<CounterItem>()
 

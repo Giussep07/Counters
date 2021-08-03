@@ -14,6 +14,7 @@ import com.cornershop.counterstest.databinding.FragmentExamplesBinding
 import com.cornershop.counterstest.di.viewModel.ViewModelFactory
 import com.cornershop.counterstest.presentation.base.BaseBindingFragment
 import com.cornershop.counterstest.presentation.state.createCounter.CreateCounterUiState
+import com.cornershop.counterstest.presentation.utils.AlertDialogUtil
 import com.cornershop.counterstest.presentation.widgets.exampleSection.ExampleSection
 import javax.inject.Inject
 
@@ -42,7 +43,8 @@ class ExamplesFragment : BaseBindingFragment<FragmentExamplesBinding>(), Example
                     findNavController().navigate(ExamplesFragmentDirections.actionExamplesFragmentToHomeFragment())
                 }
                 is CreateCounterUiState.Error -> {
-                    // TODO: handle error
+                    hideLoading()
+                    showDialogError(it.errorTitle, it.errorMessage, it.counterTitle)
                 }
             }
         }
@@ -76,6 +78,19 @@ class ExamplesFragment : BaseBindingFragment<FragmentExamplesBinding>(), Example
         binding.exampleSectionFood.isVisible = true
         binding.exampleSectionMisc.isVisible = true
         binding.progressLoading.isGone = true
+    }
+
+    private fun showDialogError(title: String, description: String, counterTitle: String) {
+        AlertDialogUtil.generalDialog(
+            context = requireContext(),
+            title = title,
+            message = description,
+            textButtonAccept = getString(R.string.retry),
+            textButtonCancel = getString(R.string.dismiss),
+            action = {
+                viewModel.createCounter(counterTitle)
+            }
+        )
     }
 
 }

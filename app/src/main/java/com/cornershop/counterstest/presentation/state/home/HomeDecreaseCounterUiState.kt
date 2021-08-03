@@ -1,9 +1,9 @@
 package com.cornershop.counterstest.presentation.state.home
 
-import com.cornershop.counterstest.domain.model.Counter
+import com.cornershop.counterstest.presentation.model.CounterItem
 
 sealed class HomeDecreaseCounterUiState {
     object Loading : HomeDecreaseCounterUiState()
-    data class Success(val counters: List<Counter>) : HomeDecreaseCounterUiState()
-    data class Error(val errorMessage: String) : HomeDecreaseCounterUiState()
+    data class Success(val counters: List<CounterItem>) : HomeDecreaseCounterUiState()
+    data class Error(val errorTitle: String, val errorDescription: String, val counter: CounterItem.CounterUiModel) : HomeDecreaseCounterUiState()
 }

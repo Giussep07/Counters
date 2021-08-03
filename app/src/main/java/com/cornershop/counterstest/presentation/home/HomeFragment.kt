@@ -2,10 +2,10 @@ package com.cornershop.counterstest.presentation.home
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.view.ActionMode
 import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -77,13 +77,15 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
                     } else {
                         binding.progressLoading.isGone = true
                         binding.rvCounters.isVisible = true
-                        adapter.submitList(counterPresentationMapper.toUiModel(it.counters))
+                        adapter.submitList(it.counters)
                     }
                 }
                 is HomeUiState.Error -> {
+                    binding.rvCounters.isGone = true
                     binding.srlCounters.isEnabled = false
                     binding.progressLoading.isGone = true
                     binding.groupError.isVisible = true
+                    binding.textViewErrorDescription.text = it.errorMessage
                     println("Counter Error: ${it.errorMessage}")
                 }
             }
@@ -101,13 +103,15 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
                         binding.groupNoContent.isVisible = true
                     } else {
                         binding.progressLoading.isGone = true
-                        adapter.submitList(counterPresentationMapper.toUiModel(it.counters))
+                        adapter.submitList(it.counters)
                     }
                 }
                 is HomeDecreaseCounterUiState.Error -> {
                     binding.progressLoading.isGone = true
-                    binding.groupError.isVisible = true
-                    println("Counter Error: ${it.errorMessage}")
+                    showDialogError(it.errorTitle, it.errorDescription) {
+                        viewModel.decreaseCounter(it.counter)
+                    }
+                    println("Counter Error: ${it.errorTitle}")
                 }
             }
         }
@@ -124,13 +128,15 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
                         binding.groupNoContent.isVisible = true
                     } else {
                         binding.progressLoading.isGone = true
-                        adapter.submitList(counterPresentationMapper.toUiModel(it.counters))
+                        adapter.submitList(it.counters)
                     }
                 }
                 is HomeIncreaseCounterUiState.Error -> {
                     binding.progressLoading.isGone = true
-                    binding.groupError.isVisible = true
-                    println("Counter Error: ${it.errorMessage}")
+                    showDialogError(it.errorTitle, it.errorDescription) {
+                        viewModel.increaseCounter(it.counter)
+                    }
+                    println("Counter Error: ${it.errorTitle}")
                 }
             }
         }
@@ -140,10 +146,6 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
                 is HomeDeleteCounterUiState.Deleting -> {
                     binding.progressLoading.isVisible = true
                     binding.groupNoContent.isGone = true
-                    binding.rvCounters.isGone = true
-                    binding.groupError.isGone = true
-                    tracker.clearSelection()
-                    actionMode?.finish()
                 }
                 is HomeDeleteCounterUiState.Success -> {
                     tracker.clearSelection()
@@ -154,16 +156,15 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
                     } else {
                         binding.progressLoading.isGone = true
                         binding.rvCounters.isVisible = true
-                        adapter.submitList(counterPresentationMapper.toUiModel(it.counters))
+                        adapter.submitList(it.counters)
                     }
                 }
                 is HomeDeleteCounterUiState.Error -> {
                     binding.progressLoading.isGone = true
-                    binding.groupError.isVisible = true
-                    binding.rvCounters.isGone = true
-                    tracker.clearSelection()
-                    actionMode?.finish()
-                    println("Counter Error: ${it.errorMessage}")
+                    showDialogError(it.errorTitle, it.errorMessage) {
+                        viewModel.deleteCounters(it.counters)
+                    }
+                    println("Counter Error: ${it.errorTitle}")
                 }
             }
         }
@@ -172,11 +173,13 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
             when (it) {
                 is HomeSearchUiState.NoResults -> {
                     binding.rvCounters.isVisible = false
+                    binding.groupError.isGone = true
                     binding.textViewNoResults.isVisible = true
                 }
                 is HomeSearchUiState.Results -> {
-                    adapter.submitList(counterPresentationMapper.toUiModel(it.counters))
+                    adapter.submitList(it.counters)
                     binding.rvCounters.isVisible = true
+                    binding.groupError.isGone = true
                     binding.textViewNoResults.isVisible = false
                 }
             }
@@ -192,7 +195,11 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
     }
 
     override fun onQuery(query: String) {
-        viewModel.searchCounter(query)
+        if (query.isNotEmpty()) {
+            viewModel.searchCounter(query)
+        } else {
+            viewModel.getCounters()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -238,6 +245,7 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
 
     private val actionModeCallback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
+            binding.searchView.isInvisible = true
             mode.menuInflater.inflate(R.menu.home_menu, menu)
             return true
         }
@@ -261,6 +269,7 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
         }
 
         override fun onDestroyActionMode(mode: ActionMode?) {
+            binding.searchView.isVisible = true
             tracker.clearSelection()
             actionMode = null
         }
@@ -296,6 +305,19 @@ class HomeFragment : BaseBindingFragment<FragmentHomeBinding>(),
         }
 
         ShareCounterBottomSheetDialogFragment.show(childFragmentManager, countersToShare, peopleToShare)
+    }
+
+    private fun showDialogError(title: String, description: String, action: () -> Unit) {
+        AlertDialogUtil.generalDialog(
+            context = requireContext(),
+            title = title,
+            message = description,
+            textButtonAccept = getString(R.string.retry),
+            textButtonCancel = getString(R.string.dismiss),
+            action = {
+                action()
+            }
+        )
     }
 
 }

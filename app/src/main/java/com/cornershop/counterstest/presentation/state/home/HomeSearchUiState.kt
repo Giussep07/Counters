@@ -1,8 +1,8 @@
 package com.cornershop.counterstest.presentation.state.home
 
-import com.cornershop.counterstest.domain.model.Counter
+import com.cornershop.counterstest.presentation.model.CounterItem
 
 sealed class HomeSearchUiState {
-    data class Results(val counters: List<Counter>): HomeSearchUiState()
+    data class Results(val counters: List<CounterItem>): HomeSearchUiState()
     object NoResults: HomeSearchUiState()
 }

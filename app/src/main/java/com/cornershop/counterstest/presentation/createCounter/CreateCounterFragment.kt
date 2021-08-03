@@ -19,6 +19,7 @@ import com.cornershop.counterstest.databinding.FragmentCreateCounterBinding
 import com.cornershop.counterstest.di.viewModel.ViewModelFactory
 import com.cornershop.counterstest.presentation.base.BaseBindingFragment
 import com.cornershop.counterstest.presentation.state.createCounter.CreateCounterUiState
+import com.cornershop.counterstest.presentation.utils.AlertDialogUtil
 import javax.inject.Inject
 
 class CreateCounterFragment : BaseBindingFragment<FragmentCreateCounterBinding>() {
@@ -52,7 +53,8 @@ class CreateCounterFragment : BaseBindingFragment<FragmentCreateCounterBinding>(
                     findNavController().popBackStack()
                 }
                 is CreateCounterUiState.Error -> {
-                    Toast.makeText(requireContext(), "Error: ${it.error}", Toast.LENGTH_SHORT).show()
+                    binding.toolbar.root.hideLoading()
+                    showDialogError(it.errorTitle, it.errorMessage, it.counterTitle)
                 }
             }
         }
@@ -91,5 +93,18 @@ class CreateCounterFragment : BaseBindingFragment<FragmentCreateCounterBinding>(
                     startFrom, endTo, 0
             )
         }
+    }
+
+    private fun showDialogError(title: String, description: String, counterTitle: String) {
+        AlertDialogUtil.generalDialog(
+            context = requireContext(),
+            title = title,
+            message = description,
+            textButtonAccept = getString(R.string.retry),
+            textButtonCancel = getString(R.string.dismiss),
+            action = {
+                viewModel.createCounter(counterTitle)
+            }
+        )
     }
 }
